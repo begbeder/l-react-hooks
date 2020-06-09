@@ -54,10 +54,10 @@ const AppItem = (props) => {
 
   return (
     <div className="App-item" style={{ background: theme.background, color: theme.foreground }}>
-      <div className="App-item__title">{category}</div>
-      <div className="App-item__comment">{comment}</div>
-      <div className="App-item__amount">-{amount}</div>
-      <div className="App-item__date-time">{date}</div>
+      <div className="App-item__title">Category: {category || 'All'}</div>
+      <div className="App-item__comment">Comment: {comment || 'No comment'}</div>
+      <div className="App-item__amount">Amount: {amount}</div>
+      <div className="App-item__date-time">Date: {date}</div>
       |
       <button onClick={props.remove.bind(null, id)}>Remove</button>
     </div>
