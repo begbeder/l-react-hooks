@@ -69,7 +69,7 @@ const AppEditor = ({ addItem }) => {
   const [date, setDate] = useState('')
   const [comment, setComment] = useState('')
 
-  const handleSubmit = useCallback((event) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
 
     addItem({
@@ -79,7 +79,7 @@ const AppEditor = ({ addItem }) => {
     })
 
     clearValues()
-  }, [addItem, amount, date, comment])
+  }
 
   const handleChange = ({ target }) => {
     switch (target.name) {
@@ -136,15 +136,15 @@ function App() {
   const [items, setItems] = useLocalStorage('items', [])
   const [theme, setTheme] = useLocalStorage('theme', themes.dark)
 
-  const addItem = (item) => {
+  const addItem = useCallback((item) => {
     const id = items.length + 1
 
     setItems(items => [...items, { ...item, id }])
-  }
+  }, [items, setItems])
 
-  const removeItem = (searchId) => {
+  const removeItem = useCallback((searchId) => {
     setItems(items.filter(({ id }) => id !== searchId))
-  }
+  }, [items, setItems])
 
   const toggleTheme = () => {
     const newTheme = theme === themes.dark
