@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import './App.css';
 
 /**
@@ -64,22 +64,22 @@ const AppItem = (props) => {
   )
 }
 
-const AppEditor = (props) => {
-  let [amount, setAmount] = useState('')
-  let [date, setDate] = useState('')
-  let [comment, setComment] = useState('')
+const AppEditor = ({ addItem }) => {
+  const [amount, setAmount] = useState('')
+  const [date, setDate] = useState('')
+  const [comment, setComment] = useState('')
 
-  const handleSubmit = (event) => {
+  const handleSubmit = useCallback((event) => {
     event.preventDefault()
 
-    props.addItem({
+    addItem({
       amount,
       date,
       comment
     })
 
     clearValues()
-  }
+  }, [addItem])
 
   const handleChange = ({ target }) => {
     switch (target.name) {
