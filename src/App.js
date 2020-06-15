@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 
+import { useTheme, themes, ThemeProvider } from './providers/useTheme'
+
 /**
- * Custom use hook
+ * Use custom hook
  */
 const useLocalStorage = (key, initialValue) => {
   const [storedValue, setStoredValue] = useState(() => {
@@ -32,25 +34,14 @@ const useLocalStorage = (key, initialValue) => {
   return [storedValue, setValue]
 }
 
-/**
- * Use context
- */
-const themes = {
-  light: {
-    foreground: '#000000',
-    background: '#eeeeee',
-  },
-  dark: {
-    foreground: '#ffffff',
-    background: '#222222',
-  }
-}
-
-const ThemeContext = React.createContext(themes.light)
- 
-const AppItem = (props) => {
-  const { id, category, comment, amount, date } = props.item
-  const theme = useContext(ThemeContext)
+const AppItem = ({ item, remove }) => {
+  const { id, category, comment, amount, date } = item
+  const onClickHandler = useCallback(() => {
+    remove(id)
+    console.log('id', id)
+  }, [remove, id])
+  
+  const { theme } = useTheme()
 
   return (
     <div className="App-item" style={{ background: theme.background, color: theme.foreground }}>
@@ -59,7 +50,7 @@ const AppItem = (props) => {
       <div className="App-item__amount">Amount: {amount}</div>
       <div className="App-item__date-time">Date: {date}</div>
       |
-      <button onClick={props.remove.bind(null, id)}>Remove</button>
+      <button onClick={onClickHandler}>Remove</button>
     </div>
   )
 }
@@ -155,7 +146,7 @@ function App() {
   }
 
   return (
-    <ThemeContext.Provider value={theme}>
+    <ThemeProvider theme={theme}>
       <div className="App">
         <div className="App-toggler">
           <button onClick={toggleTheme}>Toggle theme</button>
@@ -170,7 +161,7 @@ function App() {
           </div>
         </div>
       </div>
-    </ThemeContext.Provider>
+    </ThemeProvider>
   )
 }
 
