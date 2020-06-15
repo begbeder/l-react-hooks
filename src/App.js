@@ -79,7 +79,7 @@ const AppEditor = ({ addItem }) => {
     })
 
     clearValues()
-  }, [addItem])
+  }, [addItem, amount, date, comment])
 
   const handleChange = ({ target }) => {
     switch (target.name) {
