@@ -51,7 +51,9 @@ const ThemeContext = React.createContext(themes.light)
 const AppItem = ({ item, remove }) => {
   const { id, category, comment, amount, date } = item;
   const onClickHandler = useCallback(() => {
-    remove(id)
+    if (remove) {
+      remove(id)
+    }
   }, [ remove, id ]);
   const theme = useContext(ThemeContext)
 
