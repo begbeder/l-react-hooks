@@ -38,7 +38,6 @@ const AppItem = ({ item, remove }) => {
   const { id, category, comment, amount, date } = item
   const onClickHandler = useCallback(() => {
     remove(id)
-    console.log('id', id)
   }, [remove, id])
   
   const { theme } = useTheme()
