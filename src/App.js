@@ -48,8 +48,11 @@ const themes = {
 
 const ThemeContext = React.createContext(themes.light)
  
-const AppItem = (props) => {
-  const { id, category, comment, amount, date } = props.item
+const AppItem = ({ item, remove }) => {
+  const { id, category, comment, amount, date } = item;
+  const onClickHandler = useCallback(() => {
+    remove(id)
+  }, [ remove, id ]);
   const theme = useContext(ThemeContext)
 
   return (
@@ -59,7 +62,7 @@ const AppItem = (props) => {
       <div className="App-item__amount">Amount: {amount}</div>
       <div className="App-item__date-time">Date: {date}</div>
       |
-      <button onClick={props.remove.bind(null, id)}>Remove</button>
+      <button onClick={onClickHandler}>Remove</button>
     </div>
   )
 }
